@@ -12,8 +12,7 @@
   ],
   "author": "DcodeGroup",
   "license": "",
-  "devDependencies": {
-    "@babel/runtime": "^7.17.2",
+  "dependencies": {
     "axios": "^0.26.0",
     "underscore": "^1.13.2",
     "vue-multiselect": "^2.1.6"
