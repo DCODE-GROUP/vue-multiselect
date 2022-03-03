@@ -61,11 +61,12 @@ npm i @dcodegroup-au/vue-multiselect
   :\is-taggable="false"
   :\is-form-input="true" // required for form inputs
   name="severity" // required for form inputs
-></multiselect-wrapper >```
+></multiselect-wrapper >
+```
 
 ## The complete wrapper component
-
-```<template>
+```
+<template>
   <div class="multi-select-wrapper">
     <template v-if="isFormInput">
       <input
@@ -276,9 +277,12 @@ export default {
 };
 </script>
 
-<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>```
+<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
+```
+
 <!--
 ### Single select / dropdown
+
 ``` jade
 multiselect(
   :value="value",
@@ -290,8 +294,7 @@ multiselect(
   label="name",
   placeholder="Select one",
   track-by="name"
-)
-```
+)```
 ### Single select with search
 ``` jade
 multiselect(
@@ -302,8 +305,7 @@ multiselect(
   placeholder="Select one",
   label="name",
   track-by="name"
-)
-```
+)```
 ### Multiple select with search
 ``` jade
 multiselect(
@@ -314,8 +316,7 @@ multiselect(
   placeholder="Pick some",
   label="name",
   track-by="name"
-)
-```
+)```
 ### Tagging
 with `@tag` event
 ``` jade
@@ -329,8 +330,7 @@ multiselect(
   placeholder="Type to search or add tag",
   label="name",
   track-by="code"
-)
-```
+)```
 ### Asynchronous dropdown
 ``` jade
 multiselect(
@@ -346,10 +346,4 @@ multiselect(
   span(slot="noResult").
     Oops! No elements found. Consider changing the search query.
 ```
-``` javascript
-methods: {
-  asyncFind (query) {
-    this.countries = findService(query)
-  }
-}
-```-->
+-->
