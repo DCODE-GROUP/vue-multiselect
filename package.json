@@ -1,6 +1,6 @@
 {
   "name": "@dcodegroup-au/vue-multiselect",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "DcodeGroup's Multi-select wrapper.",
   "main": "",
   "scripts": {
