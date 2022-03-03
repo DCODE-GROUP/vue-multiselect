@@ -64,7 +64,8 @@ name="severity" // required for form inputs
 ></v-multi-select>```
 
 ## The complete wrapper component
-```vue
+
+```
 <template>
     <div class="multi-select-wrapper">
         <multiselect
