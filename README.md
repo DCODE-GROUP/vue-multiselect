@@ -36,6 +36,34 @@ Visit: [vue-multiselect.js.org](https://vue-multiselect.js.org/#sub-getting-star
 npm i @dcodegroup-au/vue-multiselect
 ```
 
+### Configuration Options
+* All select options are API generated and additional feature for creating options with the isTaggable props is available along with a createUrl prop.
+* This component takes a required searchUrl prop which is an endpoint to a resource which returns a JSON array of objects. The optional label prop will set the option content and must corresponds to a key value from the JSON array items return from the searchUrl.
+
+```//example.vue.js
+<v-multi-select
+  :\value="form.severity"
+  track-by="id"
+  label="label"
+  search-url="/meta/endpoint"
+  :\is-multiple="false"
+  :\is-taggable="false" 
+  @\input="val => form.severity = val" // required for receiving updated input values
+/>
+```
+
+```//example.blade.php
+<v-multi-select
+track-by="id"
+label="label"
+search-url="/meta/endpoint"
+:\is-multiple="true"
+:\is-taggable="false"
+:\is-form-input="true"
+name="severity" // required for form inputs
+></v-multi-select>```
+
+## The complete wrapper component
 ```vue
 <template>
     <div class="multi-select-wrapper">

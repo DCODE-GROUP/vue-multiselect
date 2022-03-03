@@ -1,5 +1,14 @@
 <template>
   <div class="multi-select-wrapper">
+    <template v-if="isFormInput">
+      <input
+        v-for="value in values"
+        :key="value"
+        type="hidden"
+        :name="isMultiple ? name + '[]' : name"
+        :value="value"
+      >
+    </template>
     <multiselect
       v-model="input"
       :options="options"
@@ -95,11 +104,24 @@ export default {
       loading: false,
     };
   },
+  computed: {
+    values() {
+      let input = this.input;
+      if (!input) {
+        return [];
+      }
+      if (!Array.isArray(input)) {
+        input = [input];
+      }
+      return input.map(value => {
+        return value[this.trackBy];
+      });
+    },
+  },
   created() {
     this.search("", () => {
       if (this.value) {
         let values = this.value;
-        // console.log({ values })
         if (typeof values === "string") {
           values = JSON.parse(values);
         }
