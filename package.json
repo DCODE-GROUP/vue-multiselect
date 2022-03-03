@@ -1,0 +1,29 @@
+{
+  "name": "@dcodegroup-au/vue-multiselect",
+  "version": "0.0.1",
+  "description": "DcodeGroup's Multi-select wrapper.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "Multi-select",
+    "Vue"
+  ],
+  "author": "DcodeGroup",
+  "license": "",
+  "devDependencies": {
+    "@babel/runtime": "^7.17.2",
+    "axios": "^0.26.0",
+    "underscore": "^1.13.2",
+    "vue-multiselect": "^2.1.6"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DCODE-GROUP/vue-multiselect.git"
+  },
+  "homepage": "https://github.com/DCODE-GROUP/vue-multiselect#readme",
+  "bugs": {
+    "url": "https://github.com/DCODE-GROUP/vue-multiselect/issues"
+  }
+}
