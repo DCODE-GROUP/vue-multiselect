@@ -1,1 +1,0 @@
-console.log('Message from vue-multiselect package 0.0.2')

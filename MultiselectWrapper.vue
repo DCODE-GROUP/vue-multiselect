@@ -31,6 +31,10 @@ export default {
     multiselect: Multiselect,
   },
   props: {
+    searchUrl: {
+      type: String,
+      required: true,
+    },
     name: {
       type: String,
     },
@@ -66,10 +70,7 @@ export default {
       type: String,
       required: false,
     },
-    searchUrl: {
-      type: String,
-      required: true,
-    },
+
     isMultiple: {
       type: Boolean,
       default: false,

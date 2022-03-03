@@ -2,7 +2,7 @@
   "name": "@dcodegroup-au/vue-multiselect",
   "version": "0.0.2",
   "description": "DcodeGroup's Multi-select wrapper.",
-  "main": "index.js",
+  "main": "",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
