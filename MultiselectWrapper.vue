@@ -71,7 +71,7 @@ export default {
       type: String,
       default: "label",
     },
-    getUrl: {
+    getUrl: { // does this ever get used???
       type: String,
       default: null,
     },
@@ -138,7 +138,7 @@ export default {
     });
     this.search = _.debounce(this.search, 200);
     if (this.clearOnEventName) {
-      this.eventBus.$on(this.clearOnEventName, () => (this.input = null));
+      this.$root.$on(this.clearOnEventName, () => (this.input = null));
     }
   },
   methods: {

@@ -21,7 +21,6 @@ Visit: [vue-multiselect.js.org](https://vue-multiselect.js.org/#sub-getting-star
 * Filtering
 * Search with suggestions
 
-
 ## Breaking changes:
 * Instead of Vue.partial for custom option templates you can use a custom render function.
 * The `:key` props has changed to `:track-by`, due to conflicts with Vue 2.0.
@@ -30,7 +29,7 @@ Visit: [vue-multiselect.js.org](https://vue-multiselect.js.org/#sub-getting-star
 * `:selected` has changed to `:value` for the same reason
 * Browserify users: if you wish to import `.vue` files, please add `vueify` transform.
 
-## Install & basic usage
+## Install
 
 ```bash
 npm i @dcodegroup-au/vue-multiselect
@@ -40,246 +39,30 @@ npm i @dcodegroup-au/vue-multiselect
 * All select options are API generated and additional feature for creating options with the isTaggable props is available along with a createUrl prop.
 * This component takes a required searchUrl prop which is an endpoint to a resource which returns a JSON array of objects. The optional label prop will set the option content and must corresponds to a key value from the JSON array items return from the searchUrl.
 
-```//example.vue.js
+example.vue.js
+```
 <multiselect-wrapper
-  :\value="form.severity"
+  :value="form.severity"
   track-by="id"
   label="label"
   search-url="/meta/endpoint"
-  :\is-multiple="false"
-  :\is-taggable="false"
-  @\input="val => form.severity = val" // required for receiving updated input values
+  :is-multiple="false"
+  :is-taggable="false"
+  @input="val => form.severity = val" // required for receiving updated input values
 />
 ```
-
-```//example.blade.php
+example.blade.php
+```
 <multiselect-wrapper
   track-by="id"
   label="label"
   search-url="/meta/endpoint"
-  :\is-multiple="true"
-  :\is-taggable="false"
-  :\is-form-input="true" // required for form inputs
+  :is-multiple="true"
+  :is-taggable="false"
+  :is-form-input="true" // required for form inputs
   name="severity" // required for form inputs
 ></multiselect-wrapper >
 ```
-
-## The complete wrapper component
-```
-<template>
-  <div class="multi-select-wrapper">
-    <template v-if="isFormInput">
-      <input
-        v-for="value in values"
-        :key="value"
-        type="hidden"
-        :name="isMultiple ? name + '[]' : name"
-        :value="value"
-      >
-    </template>
-    <multiselect
-      v-model="input"
-      :options="options"
-      :disabled="disabled"
-      :track-by="trackBy"
-      :label="label"
-      :close-on-select="!isMultiple"
-      :show-labels="isMultiple"
-      :multiple="isMultiple"
-      :loading="loading"
-      :taggable="isTaggable"
-      :tag-position="tagPosition"
-      :placeholder="placeholder"
-      @tag="create"
-      @search-change="search"
-      @input="$emit('input', input)"
-    />
-  </div>
-</template>
-
-<script>
-import axios from "axios";
-import Multiselect from "vue-multiselect";
-import _ from "underscore";
-
-export default {
-  name: "VSelect",
-  components: {
-    multiselect: Multiselect,
-  },
-  props: {
-    searchUrl: {
-      type: String,
-      required: true,
-    },
-    name: {
-      type: String,
-    },
-    value: {
-      default: null,
-      required: false,
-    },
-    placeholder: {
-      type: String,
-      default: null,
-    },
-    disabled: {
-      type: Boolean,
-      default: false,
-    },
-    trackBy: {
-      type: String,
-      default: "id",
-    },
-    tagPosition: {
-      type: String,
-      default: "bottom",
-    },
-    label: {
-      type: String,
-      default: "label",
-    },
-    getUrl: {
-      type: String,
-      default: null,
-    },
-    createUrl: {
-      type: String,
-      required: false,
-    },
-
-    isMultiple: {
-      type: Boolean,
-      default: false,
-    },
-    isTaggable: {
-      type: Boolean,
-      default: false,
-    },
-    isFormInput: {
-      type: Boolean,
-      default: false,
-    },
-    clearOnEventName: {
-      type: String,
-      required: false,
-    },
-  },
-  data() {
-    return {
-      input: [],
-      options: [],
-      loading: false,
-    };
-  },
-  computed: {
-    values() {
-      let input = this.input;
-      if (!input) {
-        return [];
-      }
-      if (!Array.isArray(input)) {
-        input = [input];
-      }
-      return input.map(value => {
-        return value[this.trackBy];
-      });
-    },
-  },
-  created() {
-    this.search("", () => {
-      if (this.value) {
-        let values = this.value;
-        if (typeof values === "string") {
-          values = JSON.parse(values);
-        }
-        if (!Array.isArray(values)) {
-          values = [values];
-        }
-        for (let value of values) {
-          if (this.options.some(option => option === value) === false) {
-            this.options.push(value);
-          }
-          this.input.push(value);
-        }
-      }
-    });
-    this.search = _.debounce(this.search, 200);
-    if (this.clearOnEventName) {
-      this.eventBus.$on(this.clearOnEventName, () => (this.input = null));
-    }
-  },
-  methods: {
-    async get(id) {
-      if (this.getUrl && id) {
-        this.loading = true;
-        await axios
-          .get(this.getUrl, {
-            params: {
-              id: id,
-            },
-          })
-          .then(response => {
-            let data = response.data.data;
-            this.input.push(data);
-            this.$emit("get", data);
-          })
-          .catch(console.error)
-          .finally(() => {
-            this.loading = false;
-          });
-      }
-    },
-    async create(newOption) {
-      if (this.createUrl) {
-        this.loading = true;
-        console.log({ newOption }, this.createUrl)
-        await axios
-          .post(this.createUrl, {
-            name: newOption,
-          })
-          .then(response => {
-            let value = response.data;
-            this.options.push(value);
-            if (this.isMultiple) {
-              this.input.push(value);
-            } else {
-              this.input = value;
-            }
-          })
-          .catch(console.error)
-          .finally(() => {
-            this.$emit('input', this.input)
-            this.loading = false;
-          });
-      }
-    },
-    async search(search = "", callback = null) {
-      this.loading = true;
-      await axios
-        .get(this.searchUrl, {
-          params: {
-            s: search,
-          },
-        })
-        .then(response => {
-          this.options = response.data;
-          if (callback) {
-            callback(response);
-          }
-        })
-        .catch(console.error)
-        .finally(() => {
-          this.loading = false;
-        });
-    },
-  },
-};
-</script>
-
-<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
-```
-
 <!--
 ### Single select / dropdown
 
