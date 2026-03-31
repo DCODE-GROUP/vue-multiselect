@@ -13,7 +13,7 @@
   "author": "DcodeGroup",
   "license": "",
   "dependencies": {
-    "axios": "^0.30.2",
+    "axios": "0.30.3",
     "underscore": "^1.13.2",
     "vue-multiselect": "^2.1.6"
   },
@@ -24,5 +24,8 @@
   "homepage": "https://github.com/DCODE-GROUP/vue-multiselect#readme",
   "bugs": {
     "url": "https://github.com/DCODE-GROUP/vue-multiselect/issues"
+  },
+  "overrides": {
+    "axios": "0.30.3"
   }
 }
